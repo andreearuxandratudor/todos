@@ -1,0 +1,24 @@
+<%= link_to "New", "/todos/new" %> <br />
+
+      <% if flash[:notice] %>
+            <p><%= flash[:notice] %></p>
+      <% end %>
+
+      <ul>
+      <% @todos.each do |todo| %>
+        <li>
+          <%= todo.title %> - <%= todo.user.present? ? todo.user.name : "Not assigned" %> - 
+          <%= link_to "sterge", "/todos/delete?todo_id=#{todo.id}" %>
+        </li>
+      <% end %>
+      </ul>
+        <%= form_tag("/todos", method: "get") do %>
+                <%= label_tag(:q, "Search for:") %>
+                <%= text_field_tag(:q) %>
+                <%= submit_tag("Search") %>
+        <% end %>
+      <%= link_to "All", "/todos" %> |
+      <% @users.each do |user| %>
+        <%= link_to user.name, "/todos?user_id=#{user.id}" %> |
+      <% end %>
+
